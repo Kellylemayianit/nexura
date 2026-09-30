@@ -1,0 +1,14 @@
+.topbar{
+  background:linear-gradient(160deg, var(--header2), var(--header));
+  padding:calc(18px + env(safe-area-inset-top,0px)) 20px 44px;
+  display:flex; align-items:center; justify-content:space-between; color:#fff;
+}
+.topbar .greet{ display:flex; align-items:center; gap:10px; }
+.topbar .avatar-sm{ width:38px; height:38px; border-radius:50%; object-fit:cover; background:#ccc; }
+.topbar .hi{ font-size:14px; font-weight:600; }
+.topbar .sub{ font-size:11.5px; opacity:.7; margin-top:1px; }
+.topbar .icons{ display:flex; gap:10px; }
+.topbar .icon-btn{ width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,.12);
+  display:flex; align-items:center; justify-content:center; font-size:14px; }
+.brand{ font-family:var(--font-display); font-weight:700; font-size:16px; color:#fff; }
+.brand .dot{ color:var(--accent); }
