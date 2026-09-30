@@ -4,6 +4,7 @@ import { navigate } from '../router.js';
 
 // Where each quick-service tile leads. Anything not mapped just closes the sheet (demo stub).
 const ROUTES = { send:'contacts', paybill:'paybill', mobile:'airtime' };
+// bundles, intl, rewards, internet, withdraw: not built yet — tapping just closes the sheet for now.
 
 export function MoreServicesSheet() {
   const overlay = el('div', 'sheet-overlay');

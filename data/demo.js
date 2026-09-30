@@ -30,13 +30,34 @@ export const TRANSACTIONS = [
 ];
 
 export const QUICK_SERVICES = [
-  { id:'topup', label:'Top Up', icon:'＋' },
-  { id:'send', label:'Transfer', icon:'⇄' },
-  { id:'withdraw', label:'Withdraw', icon:'⇓' },
-  { id:'mobile', label:'Mobile Pay', icon:'📱' },
-  { id:'scan', label:'Scan', icon:'▣' },
+  { id:'send', label:'Send Money', icon:'➤' },
   { id:'paybill', label:'Pay Bill', icon:'🧾' },
+  { id:'withdraw', label:'Withdraw', icon:'⬇' },
+  { id:'bundles', label:'Buy Bundles', icon:'📶' },
+  { id:'intl', label:"Int'l Transfer", icon:'🌍' },
+  { id:'mobile', label:'Airtime Top Up', icon:'📞' },
+  { id:'rewards', label:'Rewards', icon:'🎁' },
+  { id:'internet', label:'Home Internet', icon:'🏠' },
 ];
+
+export const FINANCIAL_SERVICES = [
+  { label:'Overdraft', icon:'💳' },
+  { label:'Savings Pool', icon:'🏦' },
+  { label:'Micro-Loan', icon:'🪙' },
+];
+
+export const WALLETS = [
+  { label:'Business Wallet', icon:'💼' },
+  { label:'Family Wallet', icon:'👨‍👩‍👧' },
+];
+
+export const FREQUENTS = [
+  { name:'Amara Nwosu', action:'Send money', color:'#3ECF8E' },
+  { name:'Chidi Okeke', action:'Send money', color:'#E8A33D' },
+  { name:'KPLC', action:'Pay bill', color:'#6EA8FE' },
+  { name:'Safaricom', action:'Buy airtime', color:'#E15B5B' },
+];
+
 
 export const BILL_CATEGORIES = [
   { id:'elec', label:'Electricity', icon:'⚡' },
