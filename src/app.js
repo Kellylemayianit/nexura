@@ -5,6 +5,7 @@ import { HomePage } from './pages/home.js';
 import { PayBillPage } from './pages/paybill.js';
 import { ProfilePage } from './pages/profile.js';
 import { InvestPage } from './pages/invest.js';
+import { AirtimePage } from './pages/airtime.js';
 import { ContactsPage } from './pages/contacts.js';
 import { AmountPage } from './pages/amount.js';
 import { AuthPage } from './pages/auth.js';
@@ -13,13 +14,14 @@ import { ReceiptPage } from './pages/receipt.js';
 
 // Routes that show the greeting header + bottom nav (the main tabs).
 // The send-money flow is a focused task, so it hides both for less clutter.
-const CHROME_ROUTES = new Set(['home', 'paybill', 'profile', 'invest']);
+const CHROME_ROUTES = new Set(['home', 'paybill', 'profile', 'invest', 'airtime']);
 
 const routes = {
   home: HomePage,
   paybill: PayBillPage,
   profile: ProfilePage,
   invest: InvestPage,
+  airtime: AirtimePage,
   contacts: ContactsPage,
   amount: AmountPage,
   auth: AuthPage,

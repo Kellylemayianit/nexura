@@ -3,7 +3,7 @@ import { dataLoader } from '../services/dataLoader.js';
 import { navigate } from '../router.js';
 
 // Where each quick-service tile leads. Anything not mapped just closes the sheet (demo stub).
-const ROUTES = { send:'contacts', paybill:'paybill' };
+const ROUTES = { send:'contacts', paybill:'paybill', mobile:'airtime' };
 
 export function MoreServicesSheet() {
   const overlay = el('div', 'sheet-overlay');

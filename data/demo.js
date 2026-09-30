@@ -64,3 +64,11 @@ export const HOLDINGS = [
   { symbol:'USDC', name:'USD Coin',                balance:'320.00', changePct:0.0, color:'#7C8680' },
   { symbol:'LP',   name:'Mento FPMM pool share',   balance:'96.30',  changePct:-0.3, color:'#E15B5B' },
 ];
+
+export const AIRTIME_PROVIDERS = [
+  { id:'safaricom', name:'Safaricom', color:'#1E9E5A' },
+  { id:'mtn', name:'MTN', color:'#E8A33D' },
+  { id:'airtel', name:'Airtel', color:'#E15B5B' },
+  { id:'glo', name:'Globacom', color:'#3ECF8E' },
+];
+export const AIRTIME_PRESETS = [1, 2, 5, 10, 20];

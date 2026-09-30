@@ -5,6 +5,7 @@
 import {
   CONTACTS, ACCOUNT, ROUTE_FEE_PCT, ROUTING_STEPS, PROFILE, TRANSACTIONS,
   QUICK_SERVICES, BILL_CATEGORIES, UNPAID_BILL, NEARBY_FRIENDS, BILL_HISTORY, HOLDINGS,
+  AIRTIME_PROVIDERS, AIRTIME_PRESETS,
 } from '../../data/demo.js';
 
 const cache = new Map();
@@ -28,6 +29,8 @@ export const dataLoader = {
   getNearbyFriends: () => NEARBY_FRIENDS,
   getBillHistory: () => cached('billhist', async () => { await delay(80); return BILL_HISTORY; }),
   getHoldings: () => cached('holdings', async () => { await delay(100); return HOLDINGS; }),
+  getAirtimeProviders: () => AIRTIME_PROVIDERS,
+  getAirtimePresets: () => AIRTIME_PRESETS,
   getRouteFeePct: () => ROUTE_FEE_PCT,
   getRoutingSteps: (registered) => ROUTING_STEPS(registered),
   clearCache: () => cache.clear(),
