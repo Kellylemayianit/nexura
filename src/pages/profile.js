@@ -1,8 +1,10 @@
 import { el } from '../utilities/helpers.js';
 import { dataLoader } from '../services/dataLoader.js';
 import { toast } from '../utilities/helpers.js';
+import { navigate } from '../router.js';
 
 const GROUP_A = [
+  { icon:'📈', label:'Holdings', route:'invest' },
   { icon:'👤', label:'Personal Details' },
   { icon:'🔒', label:'Security' },
   { icon:'🔗', label:'Linked Accounts' },
@@ -27,7 +29,7 @@ function group(items) {
       ? `<span class="ic">${it.icon}</span><span>${it.label}</span><span class="switch"></span>`
       : `<span class="ic">${it.icon}</span><span>${it.label}</span><span class="arrow">›</span>`);
     if (it.toggle) row.querySelector('.switch').onclick = (e) => { e.currentTarget.classList.toggle('on'); };
-    else row.onclick = () => toast(`${it.label} — demo only`);
+    else row.onclick = () => it.route ? navigate(it.route) : toast(`${it.label}: demo only`);
     box.appendChild(row);
   });
   return box;

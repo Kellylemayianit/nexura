@@ -32,3 +32,13 @@ python3 -m http.server 8080
 Note: the booking/WhatsApp-link, map/compare workspace, and admin
 dashboard folders from the original template were left out — they
 belong to a different (marketplace/booking) app and don't apply here.
+
+
+## Tabs (current UI)
+- **Send / Receive** (`pages/send.js`): contacts and new numbers feed the shared flow: `amount` > `auth` > `processing` > `receipt`. Receive shows your ID, link and deposit details.
+- **Lipa na M-Pesa** (`pages/lipa.js`): Pochi la Biashara, Paybill and Buy Goods Till.
+- **Airtime & Data** (`pages/airtime.js`): airtime top-ups and data bundles.
+- **More** (`pages/more.js`): payment QR (demo pattern, not scannable), link, request, invoice, offline pay.
+
+Every payment type calls `sessionStore.begin(payee, amount)` and reuses the same PIN, routing and receipt screens.
+Values in [brackets] (rates, fees, bundle prices) are placeholders until partner terms exist.

@@ -6,7 +6,7 @@ export const el = (tag, className, html) => {
   return node;
 };
 export const initials = (name) => name.split(' ').map(w => w[0]).slice(0, 2).join('');
-export const formatAmount = (n, currency = 'cKES') => `${(parseFloat(n) || 0).toFixed(2)} ${currency}`;
+export const formatAmount = (n, currency = 'USDC') => `${(parseFloat(n) || 0).toFixed(2)} ${currency}`;
 
 let toastTimer = null;
 export function toast(message, ms = 2200) {
@@ -15,4 +15,9 @@ export function toast(message, ms = 2200) {
   const node = el('div', 'toast', message);
   document.body.appendChild(node);
   toastTimer = setTimeout(() => node.remove(), ms);
+}
+
+export async function copyText(text, label = 'Copied') {
+  try { await navigator.clipboard.writeText(text); toast(label); }
+  catch { toast('Copy not available here'); }
 }

@@ -8,6 +8,8 @@ function notify() { subscribers.forEach(fn => fn(state)); }
 
 export const sessionStore = {
   get: () => state,
+  // Start a payment: any tab (send, lipa, airtime) hands off here, then the shared PIN -> route -> receipt flow runs.
+  begin: (recipient, amount = '') => { state.recipient = recipient; state.amount = amount; state.pin = ''; notify(); },
   setRecipient: (c) => { state.recipient = c; notify(); },
   setAmount: (a) => { state.amount = a; notify(); },
   appendPinDigit: (d) => { if (state.pin.length < 4) { state.pin += d; notify(); } },

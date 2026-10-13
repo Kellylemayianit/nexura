@@ -3,9 +3,9 @@
 // loading states are visible; swap the bodies for `api.js` calls later
 // and nothing upstream has to change.
 import {
-  CONTACTS, ACCOUNT, ROUTE_FEE_PCT, ROUTING_STEPS, PROFILE, TRANSACTIONS,
-  QUICK_SERVICES, BILL_CATEGORIES, UNPAID_BILL, NEARBY_FRIENDS, BILL_HISTORY, HOLDINGS,
-  AIRTIME_PROVIDERS, AIRTIME_PRESETS, FINANCIAL_SERVICES, WALLETS, FREQUENTS,
+  CONTACTS, PAYOUT_NETWORKS, ACCOUNT, ROUTE_FEE_PCT, ROUTING_STEPS, PROFILE, TRANSACTIONS,
+  LIPA_MODES, SAVED_PAYBILLS, AIRTIME_PROVIDERS, AIRTIME_PRESETS, DATA_BUNDLES,
+  RECEIVE_INFO, PAY_TOOLS, HOLDINGS,
 } from '../../data/demo.js';
 
 const cache = new Map();
@@ -20,21 +20,19 @@ async function cached(key, fn) {
 
 export const dataLoader = {
   getContacts: () => cached('contacts', async () => { await delay(120); return CONTACTS; }),
+  getPayoutNetworks: () => PAYOUT_NETWORKS,
   getAccount:  () => cached('account',  async () => { await delay(80);  return ACCOUNT; }),
   getProfile:  () => cached('profile',  async () => { await delay(60);  return PROFILE; }),
   getTransactions: () => cached('tx', async () => { await delay(100); return TRANSACTIONS; }),
-  getQuickServices: () => QUICK_SERVICES,
-  getBillCategories: () => BILL_CATEGORIES,
-  getUnpaidBill: () => cached('bill', async () => { await delay(80); return UNPAID_BILL; }),
-  getNearbyFriends: () => NEARBY_FRIENDS,
-  getBillHistory: () => cached('billhist', async () => { await delay(80); return BILL_HISTORY; }),
-  getHoldings: () => cached('holdings', async () => { await delay(100); return HOLDINGS; }),
+  getLipaModes: () => LIPA_MODES,
+  getSavedPaybills: () => cached('paybills', async () => { await delay(80); return SAVED_PAYBILLS; }),
   getAirtimeProviders: () => AIRTIME_PROVIDERS,
   getAirtimePresets: () => AIRTIME_PRESETS,
-  getFinancialServices: () => FINANCIAL_SERVICES,
-  getWallets: () => WALLETS,
-  getFrequents: () => FREQUENTS,
+  getDataBundles: () => DATA_BUNDLES,
+  getReceiveInfo: () => RECEIVE_INFO,
+  getPayTools: () => PAY_TOOLS,
+  getHoldings: () => cached('holdings', async () => { await delay(100); return HOLDINGS; }),
   getRouteFeePct: () => ROUTE_FEE_PCT,
-  getRoutingSteps: (registered) => ROUTING_STEPS(registered),
+  getRoutingSteps: (recipient) => ROUTING_STEPS(recipient),
   clearCache: () => cache.clear(),
 };

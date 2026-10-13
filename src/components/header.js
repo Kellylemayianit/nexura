@@ -1,4 +1,5 @@
-import { el } from '../utilities/helpers.js';
+import { el, initials } from '../utilities/helpers.js';
+import { icons } from '../utilities/icons.js';
 import { dataLoader } from '../services/dataLoader.js';
 import { navigate } from '../router.js';
 
@@ -7,15 +8,12 @@ export async function Header() {
   const first = profile.name.split(' ')[0];
   const bar = el('div', 'topbar', `
     <div class="greet">
-      <div class="avatar-sm"></div>
-      <div><div class="hi">Hi, ${first} 👋</div><div class="sub">Welcome back to Nexura</div></div>
+      <div class="avatar-sm">${initials(profile.name)}</div>
+      <div><div class="hi">Hi, ${first}</div><div class="sub">Chip signer on</div></div>
     </div>
-    <div class="icons">
-      <div class="icon-btn">🔔</div>
-      <div class="icon-btn">⚙️</div>
-    </div>
+    <div class="icons"><button class="icon-btn" aria-label="Profile">${icons.user}</button></div>
   `);
-  bar.querySelectorAll('.icon-btn')[1].onclick = () => navigate('profile');
+  bar.querySelector('.icon-btn').onclick = () => navigate('profile');
   return bar;
 }
 

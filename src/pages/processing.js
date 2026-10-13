@@ -6,10 +6,10 @@ import { navigate } from '../router.js';
 
 export async function ProcessingPage() {
   const { recipient } = sessionStore.get();
-  if (!recipient) { navigate('contacts'); return el('div'); }
+  if (!recipient) { navigate('send'); return el('div'); }
 
-  const page = el('div', '', `<h1>Routing transfer</h1><p class="lede">Kore protocol is signing and swapping on-chain.</p>`);
-  const steps = dataLoader.getRoutingSteps(recipient.registered);
+  const page = el('div', '', `<h1>Routing transfer</h1><p class="lede">Your chip has signed it. Your partner is moving the money.</p>`);
+  const steps = dataLoader.getRoutingSteps(recipient);
   page.appendChild(RouteSteps(steps, () => navigate('receipt')));
   return page;
 }

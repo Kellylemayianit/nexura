@@ -1,12 +1,12 @@
 import { getRoute, onRouteChange, navigate } from './router.js';
 import { mountHeader } from './components/header.js';
 import { mountBottomNav } from './components/bottomNav.js';
-import { HomePage } from './pages/home.js';
-import { PayBillPage } from './pages/paybill.js';
+import { SendPage } from './pages/send.js';
+import { LipaPage } from './pages/lipa.js';
+import { MorePage } from './pages/more.js';
 import { ProfilePage } from './pages/profile.js';
 import { InvestPage } from './pages/invest.js';
 import { AirtimePage } from './pages/airtime.js';
-import { ContactsPage } from './pages/contacts.js';
 import { AmountPage } from './pages/amount.js';
 import { AuthPage } from './pages/auth.js';
 import { ProcessingPage } from './pages/processing.js';
@@ -14,15 +14,16 @@ import { ReceiptPage } from './pages/receipt.js';
 
 // Routes that show the greeting header + bottom nav (the main tabs).
 // The send-money flow is a focused task, so it hides both for less clutter.
-const CHROME_ROUTES = new Set(['home', 'paybill', 'profile', 'invest', 'airtime']);
+const CHROME_ROUTES = new Set(['send', 'lipa', 'airtime', 'more', 'profile', 'invest']);
 
 const routes = {
-  home: HomePage,
-  paybill: PayBillPage,
+  home: SendPage,
+  send: SendPage,
+  lipa: LipaPage,
+  more: MorePage,
   profile: ProfilePage,
   invest: InvestPage,
   airtime: AirtimePage,
-  contacts: ContactsPage,
   amount: AmountPage,
   auth: AuthPage,
   processing: ProcessingPage,
@@ -46,5 +47,5 @@ async function render() {
 }
 
 onRouteChange(render);
-if (!location.hash) navigate('home');
+if (!location.hash) navigate('send');
 render();

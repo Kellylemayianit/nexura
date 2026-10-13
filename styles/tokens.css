@@ -1,12 +1,12 @@
 :root{
-  --bg:#F4F6F4; --panel:#FFFFFF; --panel2:#F0F3F0; --line:#E7EAE7;
-  --text:#151A17; --sub:#7C8680;
-  --header:#0E2C27; --header2:#163D36;
-  --accent:#9FE83B; --accent-ink:#0E2C27; --amber:#E8A33D; --danger:#E15B5B;
+  --bg:#FAFAFD; --panel:#FFFFFF; --panel2:#EFEDFF; --line:#E6E3F7;
+  --text:#14112B; --sub:#5E5A7A;
+  --header:#14112B; --header2:#241F4D;
+  --accent:#5B3DF5; --accent-ink:#FFFFFF; --amber:#FF7A1A; --danger:#D6334A;
   --radius-lg:24px; --radius-md:14px; --radius-sm:10px;
   --sidebar-w:240px;
-  --font-display:'Space Grotesk', sans-serif;
-  --font-body:'IBM Plex Sans', sans-serif;
+  --font-display:'Plus Jakarta Sans', sans-serif;
+  --font-body:'Plus Jakarta Sans', sans-serif;
   --font-mono:'IBM Plex Mono', monospace;
 }
 *{box-sizing:border-box;}
@@ -23,14 +23,14 @@ body{
 }
 .screen{ flex:1; padding:0 20px 96px; }
 .screen.no-pad{ padding-left:0; padding-right:0; }
-h1{ font-family:var(--font-display); font-size:21px; font-weight:600; margin:4px 0 4px; color:var(--text); }
+h1{ font-family:var(--font-display); font-size:22px; font-weight:800; margin:4px 0 4px; color:var(--text); }
 p.lede{ color:var(--sub); font-size:13.5px; margin:0 0 18px; line-height:1.5; }
 :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
 @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
 
 /* ---- Desktop: sidebar app-shell instead of bottom-tab mobile UI ---- */
 @media (min-width:860px){
-  body{ display:flex; align-items:center; justify-content:center; padding:32px 16px; background:#DADDD9; }
+  body{ display:flex; align-items:center; justify-content:center; padding:32px 16px; background:#E4E1F5; }
   .frame{
     max-width:1140px; width:100%; height:88vh; min-height:auto;
     border-radius:20px; overflow:hidden; box-shadow:0 30px 70px -30px rgba(0,0,0,.35);

@@ -1,22 +1,22 @@
 import { el } from '../utilities/helpers.js';
+import { icons } from '../utilities/icons.js';
 import { navigate, getRoute } from '../router.js';
-import { MoreServicesSheet } from './moreServicesSheet.js';
 
 const ITEMS = [
-  { route:'home', icon:'🏠', label:'Home' },
-  { route:'invest', icon:'📈', label:'Invest' },
-  { route:'__scan', icon:'▣', label:'Scan & Pay', scan:true },
-  { route:'paybill', icon:'🧾', label:'Pay Bill' },
-  { route:'profile', icon:'👤', label:'Profile' },
+  { route:'send',    icon:icons.send,    label:'Send / Receive' },
+  { route:'lipa',    icon:icons.lipa,    label:'Lipa na M-Pesa' },
+  { route:'airtime', icon:icons.airtime, label:'Airtime & Data' },
+  { route:'more',    icon:icons.more,    label:'More' },
 ];
 
 export function BottomNav() {
   const active = getRoute();
-  const nav = el('div', 'bottom-nav');
+  const nav = el('nav', 'bottom-nav');
+  nav.setAttribute('aria-label', 'Main');
   ITEMS.forEach((item) => {
-    const btn = el('button', item.scan ? 'nav-scan' : `nav-item${item.route === active ? ' active' : ''}`,
-      `${item.icon}<span class="label">${item.label}</span>`);
-    btn.onclick = () => item.scan ? MoreServicesSheet() : navigate(item.route);
+    const btn = el('button', `nav-item${item.route === active ? ' active' : ''}`, `${item.icon}<span class="label">${item.label}</span>`);
+    if (item.route === active) btn.setAttribute('aria-current', 'page');
+    btn.onclick = () => navigate(item.route);
     nav.appendChild(btn);
   });
   return nav;
