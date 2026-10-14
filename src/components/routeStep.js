@@ -1,20 +1,16 @@
-import { el } from '../utilities/helpers.js';
+import { el, esc } from '../utilities/helpers.js';
+import { icons } from '../utilities/icons.js';
 
-export function RouteSteps(steps, onComplete) {
-  const list = el('div');
-  const rows = steps.map((s) => {
-    const row = el('div', 'route-step', `<div class="dot"></div><div><div class="label">${s.label}</div><div class="sub">${s.sub}</div></div>`);
+// Steps are driven by real payment status (see pages/processing.js): setProgress(n) = n steps finished.
+export function RouteSteps(steps) {
+  const list = el('ol', 'route');
+  const rows = steps.map((s, i) => {
+    const row = el('li', 'route-step rise', `<span class="dot">${icons.check}</span><div><div class="label">${esc(s.label)}</div><div class="sub">${esc(s.sub)}</div></div>`);
+    row.style.setProperty('--d', `${i * 90}ms`);
     list.appendChild(row);
-    return row.querySelector('.dot');
+    return row;
   });
-
-  let i = 0;
-  const tick = () => {
-    if (i > 0) rows[i - 1].classList.replace('active', 'done');
-    if (i < rows.length) { rows[i].classList.add('active'); i++; setTimeout(tick, 550); }
-    else setTimeout(onComplete, 500);
-  };
-  setTimeout(tick, 200);
-
+  list.setProgress = (n) => rows.forEach((r, i) => { r.classList.toggle('done', i < n); r.classList.toggle('active', i === n); });
+  list.setProgress(0);
   return list;
 }

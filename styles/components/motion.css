@@ -1,0 +1,17 @@
+.page-enter{ animation:pageIn .5s cubic-bezier(.2,.7,.2,1) both; }
+.rise{ opacity:0; transform:translateY(14px); animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards; animation-delay:var(--d,0ms); }
+.split .w{ display:inline-block; overflow:hidden; vertical-align:top; padding-bottom:.1em; }
+.split .w > span{ display:inline-block; transform:translateY(110%); animation:wordUp .65s cubic-bezier(.2,.7,.2,1) forwards; animation-delay:calc(var(--i) * 70ms + 150ms); }
+.bump{ animation:bump .38s ease; } .shake{ animation:shake .4s; }
+@keyframes pageIn{ from{ opacity:0; transform:translateY(12px); } to{ opacity:1; transform:none; } }
+@keyframes rise{ to{ opacity:1; transform:none; } }
+@keyframes wordUp{ to{ transform:none; } }
+@keyframes slideFwd{ from{ opacity:0; transform:translateX(28px); } to{ opacity:1; transform:none; } }
+@keyframes slideBack{ from{ opacity:0; transform:translateX(-28px); } to{ opacity:1; transform:none; } }
+@keyframes float{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(20px,14px); } }
+@keyframes shimmer{ from{ background-position:100% 0; } to{ background-position:-100% 0; } }
+@keyframes bump{ 40%{ transform:scale(1.07); color:var(--accent-text); } }
+@keyframes shake{ 20%,60%{ transform:translateX(-7px); } 40%,80%{ transform:translateX(7px); } }
+@keyframes pulse{ 50%{ box-shadow:0 0 0 7px rgba(255,122,26,.22); } }
+@keyframes draw{ to{ stroke-dashoffset:0; } }
+@keyframes markIn{ from{ transform:scale(.55); opacity:0; } to{ transform:none; opacity:1; } }

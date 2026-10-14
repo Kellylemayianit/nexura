@@ -1,19 +1,17 @@
-// The ONLY file that is allowed to call a real backend.
-// Everything else (pages, components) goes through dataLoader.js instead.
-// Point BASE_URL at your Cloudflare Worker / API gateway when it exists.
-const BASE_URL = '/api';
-
-async function request(path, opts = {}) {
-  const res = await fetch(`${BASE_URL}${path}`, {
-    headers: { 'Content-Type': 'application/json' },
-    ...opts,
-  });
-  if (!res.ok) throw new Error(`API ${path} failed: ${res.status}`);
-  return res.json();
-}
+// The ONLY file that talks to the real backend. Shapes are documented in docs/API_CONTRACT.md;
+// src/services/mock.js implements the same methods, so switching is a one-line env change.
+import { http } from './http.js';
 
 export const api = {
-  getContacts: () => request('/contacts'),
-  getAccount:  () => request('/account'),
-  sendTransfer: (payload) => request('/transfers', { method:'POST', body: JSON.stringify(payload) }),
+  getProfile:       () => http('/me'),
+  getAssets:        () => http('/wallet/assets'),
+  getContacts:      () => http('/contacts'),
+  getSavedPaybills: () => http('/lipa/saved'),
+  getDataBundles:   (provider) => http(`/airtime/bundles?provider=${encodeURIComponent(provider)}`),
+  getReceiveInfo:   () => http('/receive'),
+  getPayTools:      () => http('/pay-tools'),
+  verifyPin:        (pin) => http('/auth/pin', { method: 'POST', body: { pin } }),
+  createQuote:      (body) => http('/quotes', { method: 'POST', body }),
+  createPayment:    (body, idempotencyKey) => http('/payments', { method: 'POST', body, idempotencyKey }),
+  getPayment:       (id) => http(`/payments/${encodeURIComponent(id)}`),
 };

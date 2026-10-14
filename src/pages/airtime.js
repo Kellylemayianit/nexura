@@ -1,58 +1,70 @@
-import { el, toast } from '../utilities/helpers.js';
+import { el, esc, fmt, toast } from '../utilities/helpers.js';
 import { dataLoader } from '../services/dataLoader.js';
 import { sessionStore } from '../services/sessionStore.js';
+import { market } from '../config/market.js';
 import { PageHeader } from '../components/pageHeader.js';
+import { SlimHero } from '../components/hero.js';
 import { Segmented, Chips } from '../components/segmented.js';
+import { QuoteBox } from '../components/quoteBox.js';
 import { navigate } from '../router.js';
 
 export async function AirtimePage() {
-  const profile = await dataLoader.getProfile();
-  const providers = dataLoader.getAirtimeProviders();
-  const presets = dataLoader.getAirtimePresets();
-  const bundles = dataLoader.getDataBundles();
-  let kind = 'airtime', provider = providers[0], amount = presets[2], bundle = bundles[0], mine = true;
+  const [assets, profile] = await Promise.all([dataLoader.getAssets(), dataLoader.getProfile()]);
+  const providers = market.airtimeProviders;
+  let kind = 'airtime', provider = providers[0], amount = market.airtimePresets[2], bundle = null, mine = true;
+  let bundles = await dataLoader.getDataBundles(provider.id);
+  bundle = bundles[0];
 
   const page = el('div');
   page.appendChild(await PageHeader('Airtime & Data'));
+  page.appendChild(SlimHero('Stay connected', 'Top up airtime or buy a data bundle in a few taps.'));
   const body = el('div');
 
   function form() {
+    const go = el('button', 'btn btn-primary', ''); go.disabled = true;
+    const qb = QuoteBox(assets, { kind: 'airtime', onChange: (q) => { go.disabled = !(q && qb.isAffordable()); } });
+    const payee = () => ({ rail: 'airtime' });
     const colA = el('div'), colB = el('div');
     const phone = el('input', 'input'); phone.id = 'at-phone'; phone.type = 'tel'; phone.value = profile.phone;
     const lab = el('label', 'field gap', 'Phone number'); lab.htmlFor = 'at-phone';
     const top = el('div', 'panel');
     top.append(el('span', 'field', 'Network'),
-      Chips(providers.map((p) => ({ id: p.id, label: p.name })), provider.id, (id) => { provider = providers.find((p) => p.id === id); }),
+      Chips(providers.map((p) => ({ id: p.id, label: p.name })), provider.id, async (id) => {
+        provider = providers.find((p) => p.id === id);
+        bundles = await dataLoader.getDataBundles(provider.id); bundle = bundles[0];
+        if (kind === 'data') show('data');
+      }),
       el('span', 'field gap', 'Top up for'),
-      Chips([{ id: 'me', label: 'My number' }, { id: 'other', label: 'Another number' }], 'me', (id) => {
-        mine = id === 'me'; phone.value = mine ? profile.phone : ''; if (!mine) phone.focus();
-      }), lab, phone);
+      Chips([{ id: 'me', label: 'My number' }, { id: 'other', label: 'Another number' }], 'me', (id) => { mine = id === 'me'; phone.value = mine ? profile.phone : ''; if (!mine) phone.focus(); }),
+      lab, phone);
     colA.appendChild(top);
 
-    let go;
+    const setGo = (text, kes) => { go.textContent = text; qb.setAmount(kes, payee()); };
+    const sel = el('div', 'panel');
     if (kind === 'airtime') {
-      const p = el('div', 'panel', '<span class="field">Amount (KES)</span>');
-      p.appendChild(Chips(presets.map((v) => ({ id: String(v), label: String(v) })), String(amount), (id) => { amount = Number(id); go.textContent = `Buy KES ${amount} airtime`; }));
-      colB.appendChild(p);
-      go = el('button', 'btn btn-primary', `Buy KES ${amount} airtime`);
+      sel.appendChild(el('span', 'field', 'Amount (KES)'));
+      sel.appendChild(Chips(market.airtimePresets.map((v) => ({ id: String(v), label: String(v) })), String(amount), (id) => { amount = Number(id); setGo(`Buy KES ${amount} airtime`, amount); }));
+      setGo(`Buy KES ${amount} airtime`, amount);
     } else {
-      const p = el('div', 'panel', '<span class="field">Popular data bundles</span>');
+      sel.appendChild(el('span', 'field', 'Popular data bundles'));
       bundles.forEach((b) => {
-        const r = el('button', `bundle${b.id === bundle.id ? ' on' : ''}`, `<span>${b.label}</span><b>${b.price}</b>`); r.type = 'button';
-        r.onclick = () => { bundle = b; p.querySelectorAll('.bundle').forEach((x) => x.classList.remove('on')); r.classList.add('on'); go.textContent = `Buy ${b.label}`; };
-        p.appendChild(r);
+        const r = el('button', `bundle${b.id === bundle.id ? ' on' : ''}`, `<span>${esc(b.label)}</span><b>KES ${fmt(b.priceKes, 0)}${b.priceIsDemo ? ' (demo)' : ''}</b>`);
+        r.type = 'button';
+        r.onclick = () => { bundle = b; sel.querySelectorAll('.bundle').forEach((x) => x.classList.remove('on')); r.classList.add('on'); setGo(`Buy ${b.label}`, b.priceKes); };
+        sel.appendChild(r);
       });
-      colB.appendChild(p);
-      go = el('button', 'btn btn-primary', `Buy ${bundle.label}`);
+      setGo(`Buy ${bundle.label}`, bundle.priceKes);
     }
+    colB.append(sel);
+    const pay = el('div', 'panel'); pay.append(el('span', 'field', 'Pay with'), qb);
+    colB.appendChild(pay);
+
     go.onclick = () => {
       if (!phone.value.trim()) { toast('Enter a phone number'); return; }
-      const isAir = kind === 'airtime';
-      sessionStore.begin({
-        name: `${provider.name} ${isAir ? 'airtime' : 'data'}`, phone: phone.value.trim(), network: provider.name, rail: 'airtime',
-        payout: 'KES', entry: 'KES', registered: false, title: isAir ? 'Airtime sent' : 'Data bundle sent',
-        settlement: `${provider.name} ${isAir ? 'airtime' : bundle.label}`,
-      }, isAir ? String(amount) : '0.01'); // bundle prices are [price] in the demo, so a nominal amount stands in
+      const air = kind === 'airtime';
+      sessionStore.begin({ kind: 'airtime', asset: qb.getAsset(), quote: qb.getQuote(), payee: {
+        name: `${provider.name} ${air ? 'airtime' : 'data'}`, phone: phone.value.trim(), network: provider.name, rail: 'airtime', registered: false,
+        kind: 'airtime', title: air ? 'Airtime sent' : 'Data bundle sent', via: `${provider.name} ${air ? 'airtime' : bundle.label}` } });
       navigate('auth');
     };
     const actions = el('div', 'actions-row'); actions.appendChild(go);

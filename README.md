@@ -34,11 +34,18 @@ dashboard folders from the original template were left out — they
 belong to a different (marketplace/booking) app and don't apply here.
 
 
-## Tabs (current UI)
-- **Send / Receive** (`pages/send.js`): contacts and new numbers feed the shared flow: `amount` > `auth` > `processing` > `receipt`. Receive shows your ID, link and deposit details.
-- **Lipa na M-Pesa** (`pages/lipa.js`): Pochi la Biashara, Paybill and Buy Goods Till.
-- **Airtime & Data** (`pages/airtime.js`): airtime top-ups and data bundles.
-- **More** (`pages/more.js`): payment QR (demo pattern, not scannable), link, request, invoice, offline pay.
+## Run
+`python3 -m http.server` then open http://localhost:8000 (no build step).
 
-Every payment type calls `sessionStore.begin(payee, amount)` and reuses the same PIN, routing and receipt screens.
-Values in [brackets] (rates, fees, bundle prices) are placeholders until partner terms exist.
+## Layout
+- `config/runtime.js`: per-environment switches (`USE_MOCK`, `API_BASE`, `MARKET`).
+- `src/config/`: `market.js` (Kenya, add countries here), `statuses.js`, `guide.js` (tour steps).
+- `src/services/`: `api.js` (real backend), `mock.js` (same shapes), `dataLoader.js` (the only thing pages import), `payments.js` (quote, sign, create, watch), `signer.js`, `theme.js`, `http.js`.
+- `src/components/`: reusable UI (asset picker, quote box, stepper, guide, header, nav, skeleton).
+- `src/pages/`: one file per screen. `docs/API_CONTRACT.md` lists every endpoint and payload.
+
+## Product (Kenya first)
+- **Send / Receive**: four-step flow (who, asset, amount, review) with a live summary, then PIN, signing, status and receipt.
+- **Lipa na M-Pesa**: Pochi la Biashara, Paybill, Buy Goods Till. **Airtime & Data**: Safaricom, Airtel, Telkom. **More**: QR, link, request, invoice, offline pay.
+- Light and dark themes (follows the device until you choose), a boot loader, a guided tour (Profile > Take the tour), and reduced-motion support.
+- Rates and bundle prices are flagged demo values until a partner supplies real ones.

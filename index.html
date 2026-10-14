@@ -3,21 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FAFAFD">
 <title>Nexura</title>
+<script>(function(){try{var t=JSON.parse(localStorage.getItem('nexura.theme'));if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;var m=document.querySelector('meta[name=theme-color]');if(m)m.content=t==='dark'?'#0C0A1D':'#FAFAFD'}catch(e){}})()</script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles/tokens.css">
 <link rel="stylesheet" href="styles/utilities/buttons.css">
 <link rel="stylesheet" href="styles/components/card.css">
 <link rel="stylesheet" href="styles/components/modal.css">
 <link rel="stylesheet" href="styles/components/pay.css">
+<link rel="stylesheet" href="styles/components/wizard.css">
+<link rel="stylesheet" href="styles/components/motion.css">
+<link rel="stylesheet" href="styles/components/guide.css">
 <link rel="stylesheet" href="styles/dashboard/stat-cards.css">
 <link rel="stylesheet" href="styles/dashboard/bottom-nav.css">
+<link rel="stylesheet" href="styles/components/mobile.css">
+<link rel="stylesheet" href="styles/components/loader.css">
 </head>
 <body>
+  <div id="boot" role="status" aria-label="Loading Nexura">
+    <div class="boot-inner">
+      <div class="boot-mark"><svg width="42" height="42" viewBox="0 0 40 40" aria-hidden="true"><path d="M10 31V9l20 22V9"/><circle cx="31" cy="9" r="3.4"/></svg></div>
+      <div class="boot-word" aria-hidden="true"><span style="--i:0">N</span><span style="--i:1">e</span><span style="--i:2">x</span><span style="--i:3">u</span><span style="--i:4">r</span><span style="--i:5">a</span></div>
+      <p class="boot-tag">Stablecoins, spendable in Kenya</p>
+      <div class="boot-bar"><i></i></div>
+    </div>
+  </div>
   <div class="frame" id="frame">
     <div id="nav-root"></div>
     <main id="app" class="screen"></main>
   </div>
+  <script src="config/runtime.js"></script>
   <script type="module" src="src/app.js"></script>
 </body>
 </html>

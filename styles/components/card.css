@@ -1,4 +1,5 @@
-.keypad{ display:grid; grid-template-columns:repeat(3,1fr); gap:6px; }
-.pin-dots{ display:flex; justify-content:center; gap:14px; margin:40px 0 32px; }
-.pin-dot{ width:14px; height:14px; border-radius:50%; border:1.5px solid var(--sub); transition:.15s; }
-.pin-dot.filled{ background:var(--accent); border-color:var(--accent); }
+.keypad{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.pin-dots{ display:flex; justify-content:center; gap:14px; margin:28px 0 24px; }
+.pin-dot{ width:14px; height:14px; border-radius:50%; border:1.5px solid var(--sub); transition:transform .2s, background .2s; }
+.pin-dot.filled{ background:var(--accent); border-color:var(--accent); transform:scale(1.15); }
+.pin-dots.shake{ animation:shake .4s; }

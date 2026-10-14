@@ -1,0 +1,9 @@
+.guide{ position:fixed; inset:0; z-index:90; }
+.g-spot{ position:fixed; border-radius:14px; box-shadow:0 0 0 9999px var(--scrim); outline:2px solid var(--amber); outline-offset:2px; pointer-events:none; transition:top .4s cubic-bezier(.2,.7,.2,1), left .4s cubic-bezier(.2,.7,.2,1), width .4s cubic-bezier(.2,.7,.2,1), height .4s cubic-bezier(.2,.7,.2,1); }
+.g-card{ position:fixed; width:min(330px, calc(100vw - 24px)); background:var(--panel); color:var(--text); border:1px solid var(--line); border-radius:20px; padding:20px; box-shadow:var(--shadow); transition:top .4s cubic-bezier(.2,.7,.2,1), left .4s cubic-bezier(.2,.7,.2,1); }
+.g-eyebrow{ font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-text); }
+.g-card h3{ margin:6px 0 6px; font-size:18px; font-weight:800; } .g-card p{ margin:0; font-size:13.5px; line-height:1.55; color:var(--sub); }
+.g-foot{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:16px; }
+.g-dots{ display:flex; gap:5px; } .g-dots i{ width:6px; height:6px; border-radius:50%; background:var(--line); transition:width .3s, background .3s; } .g-dots i.on{ width:18px; border-radius:4px; background:var(--accent); }
+.g-btns{ display:flex; gap:6px; } .g-btns button{ min-height:40px; padding:0 14px; border-radius:12px; border:0; font:800 13px var(--font-body); cursor:pointer; background:none; color:var(--sub); }
+.g-btns .g-next{ background:var(--accent); color:#fff; }

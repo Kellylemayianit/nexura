@@ -1,20 +1,16 @@
-// Client-side state for the transfer in progress — the payments-app
-// equivalent of a cart store. Holds nothing persistent; a real build
-// would sync `pin` verification server-side rather than storing it.
-const state = { recipient: null, amount: '', pin: '' };
-const subscribers = new Set();
-
-function notify() { subscribers.forEach(fn => fn(state)); }
+// State for the payment in progress (a cart, essentially). Holds nothing persistent and never the PIN beyond entry.
+const blank = () => ({ kind: null, payee: null, asset: null, quote: null, payment: null, pin: '' });
+let state = blank();
+const subs = new Set();
+const notify = () => subs.forEach((fn) => fn(state));
 
 export const sessionStore = {
   get: () => state,
-  // Start a payment: any tab (send, lipa, airtime) hands off here, then the shared PIN -> route -> receipt flow runs.
-  begin: (recipient, amount = '') => { state.recipient = recipient; state.amount = amount; state.pin = ''; notify(); },
-  setRecipient: (c) => { state.recipient = c; notify(); },
-  setAmount: (a) => { state.amount = a; notify(); },
+  begin: ({ kind, payee, asset, quote }) => { state = { ...blank(), kind, payee, asset, quote }; notify(); },
+  setPayment: (payment) => { state.payment = payment; notify(); },
   appendPinDigit: (d) => { if (state.pin.length < 4) { state.pin += d; notify(); } },
   backspacePin: () => { state.pin = state.pin.slice(0, -1); notify(); },
   clearPin: () => { state.pin = ''; notify(); },
-  reset: () => { state.recipient = null; state.amount = ''; state.pin = ''; notify(); },
-  subscribe: (fn) => { subscribers.add(fn); return () => subscribers.delete(fn); },
+  reset: () => { state = blank(); notify(); },
+  subscribe: (fn) => { subs.add(fn); return () => subs.delete(fn); },
 };

@@ -5,8 +5,10 @@ export const el = (tag, className, html) => {
   if (html != null) node.innerHTML = html;
   return node;
 };
-export const initials = (name) => name.split(' ').map(w => w[0]).slice(0, 2).join('');
-export const formatAmount = (n, currency = 'USDC') => `${(parseFloat(n) || 0).toFixed(2)} ${currency}`;
+export const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+export const initials = (name) => String(name).replace(/[^\p{L}\p{N} ]/gu, '').trim().split(/\s+/).map(w => w[0]).slice(0, 2).join('');
+export const fmt = (n, d = 2) => (Number(n) || 0).toLocaleString('en-KE', { minimumFractionDigits: d, maximumFractionDigits: d });
+export const formatAmount = (n, currency = 'KES') => `${currency} ${fmt(n)}`;
 
 let toastTimer = null;
 export function toast(message, ms = 2200) {
