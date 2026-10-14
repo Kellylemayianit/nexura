@@ -5,6 +5,7 @@ import { Keypad } from '../components/keypad.js';
 import { navigate } from '../router.js';
 
 export async function AuthPage() {
+  if (!sessionStore.get().recipient) { navigate('send'); return el('div'); }
   sessionStore.clearPin(); // keep recipient/amount, clear any stale pin
   const page = el('div', '', `<h1>Confirm with PIN</h1><p class="lede">Unlocks the secure chip in your phone to sign this payment.</p>`);
   const dots = el('div', 'pin-dots');

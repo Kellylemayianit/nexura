@@ -4,41 +4,30 @@
   --header:#14112B; --header2:#241F4D;
   --accent:#5B3DF5; --accent-ink:#FFFFFF; --amber:#FF7A1A; --danger:#D6334A;
   --radius-lg:24px; --radius-md:14px; --radius-sm:10px;
-  --sidebar-w:240px;
+  --sidebar-w:236px;
   --font-display:'Plus Jakarta Sans', sans-serif;
   --font-body:'Plus Jakarta Sans', sans-serif;
   --font-mono:'IBM Plex Mono', monospace;
 }
 *{box-sizing:border-box;}
 html,body{height:100%;margin:0;}
-body{
-  background:var(--bg);
-  font-family:var(--font-body); color:var(--text);
-  min-height:100%;
-}
-/* ---- Mobile: full-bleed app, no phone-frame chrome ---- */
-.frame{
-  width:100%; min-height:100vh; min-height:100dvh;
-  background:var(--bg); display:flex; flex-direction:column; position:relative;
-}
-.screen{ flex:1; padding:0 20px 96px; }
-.screen.no-pad{ padding-left:0; padding-right:0; }
-h1{ font-family:var(--font-display); font-size:22px; font-weight:800; margin:4px 0 4px; color:var(--text); }
-p.lede{ color:var(--sub); font-size:13.5px; margin:0 0 18px; line-height:1.5; }
+body{ background:var(--bg); font-family:var(--font-body); color:var(--text); }
+h1{ font-family:var(--font-display); font-size:22px; font-weight:800; margin:0 0 4px; }
+p.lede{ color:var(--sub); font-size:13.5px; margin:0 0 16px; line-height:1.5; }
+button{ font-family:inherit; }
 :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
 @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
 
-/* ---- Desktop: sidebar app-shell instead of bottom-tab mobile UI ---- */
+/* ---- Mobile: full-bleed screen, flat tab bar fixed to the bottom ---- */
+.frame{ width:100%; min-height:100vh; min-height:100dvh; display:flex; flex-direction:column; }
+.screen{ flex:1; padding:calc(20px + env(safe-area-inset-top,0px)) 20px 96px; }
+.frame.flow .screen{ padding-bottom:32px; }
+
+/* ---- Desktop: the app fills the whole window: sidebar + content ---- */
 @media (min-width:860px){
-  body{ display:flex; align-items:center; justify-content:center; padding:32px 16px; background:#E4E1F5; }
-  .frame{
-    max-width:1140px; width:100%; height:88vh; min-height:auto;
-    border-radius:20px; overflow:hidden; box-shadow:0 30px 70px -30px rgba(0,0,0,.35);
-    display:grid; grid-template-columns:var(--sidebar-w) 1fr; grid-template-rows:auto 1fr;
-    grid-template-areas:"nav header" "nav main";
-  }
-  #header-root{ grid-area:header; }
-  #app{ grid-area:main; overflow-y:auto; }
-  #nav-root{ grid-area:nav; }
-  .screen{ padding:0 32px 32px; max-width:760px; }
+  .frame{ display:grid; grid-template-columns:var(--sidebar-w) 1fr; height:100vh; height:100dvh; min-height:0; }
+  #nav-root{ grid-column:1; min-height:0; }
+  #app{ grid-column:2; overflow-y:auto; padding:32px 40px 40px; }
+  .frame.flow .screen{ padding:32px 40px 40px; }
+  .frame.flow #app > *{ max-width:440px; margin-left:auto; margin-right:auto; }
 }

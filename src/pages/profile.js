@@ -2,6 +2,7 @@ import { el } from '../utilities/helpers.js';
 import { dataLoader } from '../services/dataLoader.js';
 import { toast } from '../utilities/helpers.js';
 import { navigate } from '../router.js';
+import { PageHeader } from '../components/pageHeader.js';
 
 const GROUP_A = [
   { icon:'📈', label:'Holdings', route:'invest' },
@@ -37,7 +38,8 @@ function group(items) {
 
 export async function ProfilePage() {
   const profile = await dataLoader.getProfile();
-  const page = el('div', '', `<h1>Profile</h1>`);
+  const page = el('div');
+  page.appendChild(await PageHeader('Profile'));
   page.appendChild(el('div', 'profile-head', `
     <div class="av"></div>
     <div><div class="name">${profile.name}</div><div class="phone">${profile.phone}</div></div>

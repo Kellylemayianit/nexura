@@ -69,10 +69,10 @@ export const RECEIVE_INFO = [
   { k:'Deposit from M-Pesa', v:'Paybill [number], account: your Nexura ID', copy:false },
 ];
 export const PAY_TOOLS = [
-  { id:'link',    icon:'link',    label:'Payment link',  sub:'nexura.app/wanjiku',               action:'Copy link' },
-  { id:'request', icon:'request', label:'Request money', sub:'Send a request by SMS or WhatsApp', action:'Create request' },
-  { id:'invoice', icon:'invoice', label:'Invoice',       sub:'Itemised, with a pay link',         action:'New invoice' },
-  { id:'offline', icon:'bt',      label:'Offline pay',   sub:'Tap a nearby phone by Bluetooth',   action:'Start' },
+  { id:'link',    label:'Payment link',  sub:'nexura.app/wanjiku',               action:'Copy link' },
+  { id:'request', label:'Request money', sub:'Send a request by SMS or WhatsApp', action:'Create request' },
+  { id:'invoice', label:'Invoice',       sub:'Itemised, with a pay link',         action:'New invoice' },
+  { id:'offline', label:'Offline pay',   sub:'Tap a nearby phone by Bluetooth',   action:'Start' },
 ];
 
 export const HOLDINGS = [
